@@ -1,12 +1,11 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
 metadata:
   name: ecsdemo-nodejs
   labels:
     app: ecsdemo-nodejs
-  namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: ecsdemo-nodejs
@@ -26,6 +25,15 @@ spec:
         name: ecsdemo-nodejs
         ports:
         - containerPort: 3000
-          protocol: TCP
-
+          protocol: TCP    
+  serviceAccountName: prometheus-k8s
+  serviceMonitorSelector: {}
+  ruleSelector: {}
+  podMonitorSelector: {}
+  probeSelector: {}
+  alerting:
+    alertmanagers:
+      - namespace: monitoring
+        name: alertmanager-main
+        port: web
           
