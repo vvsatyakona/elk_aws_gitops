@@ -1,14 +1,29 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: prometheus
-  namespace: argocd
+  name: ecsdemo-nodejs
+  labels:
+    app: ecsdemo-nodejs
+  namespace: default
 spec:
-  project: default
-  source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 13.7.2
-    chart: kube-prometheus-stack
-destination:
-  server: https://kubernetes.default.svc
-  namespace: prometheus
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecsdemo-nodejs
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ecsdemo-nodejs
+    spec:
+      containers:
+      - image: brentley/ecsdemo-nodejs:latest
+        imagePullPolicy: Always
+        name: ecsdemo-nodejs
+        ports:
+        - containerPort: 3000
+          protocol: TCP
