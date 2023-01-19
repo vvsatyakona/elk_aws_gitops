@@ -27,13 +27,5 @@ spec:
         ports:
         - containerPort: 3000
           protocol: TCP
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: prometheus-operator
-spec:
-  channel: beta
-  name: prometheus
-  source: operatorhubio-catalog
-  sourceNamespace: olm         
+
           
