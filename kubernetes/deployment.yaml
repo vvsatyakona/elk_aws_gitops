@@ -6,6 +6,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  replicas: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: default
