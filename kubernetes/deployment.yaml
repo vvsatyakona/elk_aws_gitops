@@ -6,6 +6,8 @@ metadata:
     app: ecsdemo-nodejs
   namespace: default
 spec:
+  prometheus:
+    enabled: true
   replicas: 1
   selector:
     matchLabels:
